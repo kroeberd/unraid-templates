@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <Container>
   <Name>JDownloader Discord Monitor</Name>
-  <Repository>ghcr.io/kroeberd/jdownloader-discord-monitor:latest</Repository>
+  <Repository>kroeberd/jdownloader-docker-monitor</Repository>
   <Registry>https://github.com/kroeberd/JDownloader-Discord-Monitor/pkgs/container/jdownloader-discord-monitor</Registry>
   <Network>bridge</Network>
   <Shell>bash</Shell>
