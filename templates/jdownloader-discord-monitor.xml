@@ -9,7 +9,7 @@
   <Support>https://github.com/kroeberd/JDownloader-Discord-Monitor/issues</Support>
   <Project>https://github.com/kroeberd/JDownloader-Discord-Monitor</Project>
   <Overview>
-    Monitors one or more JDownloader instances via MyJDownloader and sends periodic, detailed Discord embeds showing active downloads, progress, and speed. Supports multiple devices, multilingual output (EN/DE), and fully automated status updates. Ideal for automation setups with Unraid and Real-Debrid.
+    Monitors one or more JDownloader instances via MyJDownloader and sends periodic, detailed Discord embeds showing active downloads, progress, and speed. Supports multiple devices, multilingual output (EN/DE), and fully automated status updates.
   </Overview>
   <Description>
     Sends detailed JDownloader download status to Discord via webhook. Multi-device and multilingual support.
