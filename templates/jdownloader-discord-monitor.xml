@@ -9,14 +9,13 @@
   <Support>https://github.com/kroeberd/JDownloader-Discord-Monitor/issues</Support>
   <Project>https://github.com/kroeberd/JDownloader-Discord-Monitor</Project>
   <Overview>
-    Monitors one or more JDownloader instances via MyJDownloader and sends periodic, detailed Discord embeds showing active downloads, progress, and speed.  
-    Supports multiple devices, multilingual output (EN/DE), and fully automated status updates.  
-    Ideal for automation setups with Unraid and Real-Debrid.
+    Monitors one or more JDownloader instances via MyJDownloader and sends periodic, detailed Discord embeds showing active downloads, progress, and speed. Supports multiple devices, multilingual output (EN/DE), and fully automated status updates. Ideal for automation setups with Unraid and Real-Debrid.
   </Overview>
+  <Description>
+    Sends detailed JDownloader download status to Discord via webhook. Multi-device and multilingual support.
+  </Description>
   <Category>Downloaders/Monitoring</Category>
   <WebUI/>
-  <Icon>https://raw.githubusercontent.com/kroeberd/JDownloader-Discord-Monitor/refs/heads/main/logo.png</Icon>
-
   <Config Name="Discord Webhook URL" Target="WEBHOOK_URL" Default="" Mode="rw" Description="Discord webhook URL for sending status messages" Type="Variable" Display="always" Required="true" Mask="false"/>
   <Config Name="MyJDownloader Email" Target="MYJD_EMAIL" Default="" Mode="rw" Description="Email address for your MyJDownloader account" Type="Variable" Display="always" Required="true" Mask="false"/>
   <Config Name="MyJDownloader Password" Target="MYJD_PASSWORD" Default="" Mode="rw" Description="Password for your MyJDownloader account" Type="Variable" Display="always" Required="true" Mask="true"/>
