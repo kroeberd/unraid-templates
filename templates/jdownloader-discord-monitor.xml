@@ -13,7 +13,7 @@
     Supports multiple devices, multilingual output (EN/DE), and fully automated status updates.  
     Ideal for automation setups with Unraid and Real-Debrid.
   </Overview>
-  <Category>Downloaders:Monitoring</Category>
+  <Category>Downloaders/Monitoring</Category>
   <WebUI/>
   <Icon>https://raw.githubusercontent.com/kroeberd/JDownloader-Discord-Monitor/refs/heads/main/logo.png</Icon>
 
