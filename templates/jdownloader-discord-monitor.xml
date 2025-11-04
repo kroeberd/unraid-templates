@@ -6,7 +6,7 @@
   <Network>bridge</Network>
   <Shell>bash</Shell>
   <Privileged>false</Privileged>
-  <Support>https://forums.unraid.net/topic/XXXXX</Support>
+  <Support>https://github.com/kroeberd/JDownloader-Discord-Monitor/issues</Support>
   <Project>https://github.com/kroeberd/JDownloader-Discord-Monitor</Project>
   <Overview>
     Monitors one or more JDownloader instances via MyJDownloader and sends periodic, detailed Discord embeds showing active downloads, progress, and speed.  
