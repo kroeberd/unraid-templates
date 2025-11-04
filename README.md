@@ -8,7 +8,7 @@ This repository contains **Unraid Community Applications (CA)** templates mainta
 
 | Name | Description | Repository |
 |------|-------------|------------|
-| **JDownloader Discord Monitor** | Monitors one or more JDownloader instances via MyJDownloader and sends periodic Discord embeds with download status, progress, and speed. | [[ghcr.io/kroeberd/jdownloader-discord-monitor](https://github.com/kroeberd/JDownloader-Discord-Monitor) |
+| **JDownloader Discord Monitor** | Monitors one or more JDownloader instances via MyJDownloader and sends periodic Discord embeds with download status, progress, and speed. | [[kroeberd/jdownloader-discord-monitor](https://github.com/kroeberd/JDownloader-Discord-Monitor) |
 
 ---
 
