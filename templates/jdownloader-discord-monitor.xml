@@ -8,6 +8,7 @@
   <Privileged>false</Privileged>
   <Support>https://github.com/kroeberd/JDownloader-Discord-Monitor/issues</Support>
   <Project>https://github.com/kroeberd/JDownloader-Discord-Monitor</Project>
+  <Icon>https://raw.githubusercontent.com/kroeberd/JDownloader-Discord-Monitor/refs/heads/main/logos/logo_jm_128px.png</Icon>
   <Overview>
     Monitors one or more JDownloader instances via MyJDownloader and sends periodic, detailed Discord embeds showing active downloads, progress, and speed. Supports multiple devices, multilingual output (EN/DE), and fully automated status updates.
   </Overview>
