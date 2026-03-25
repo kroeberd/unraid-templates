@@ -8,7 +8,7 @@
   <Privileged>false</Privileged>
   <Support>https://discord.gg/8Vb9cj4ksv</Support>
   <Project>https://mediastarr.de</Project>
-  <Icon>https://raw.githubusercontent.com/kroeberd/mediastarr/main/static/icon.png</Icon>
+  <Icon>https://raw.githubusercontent.com/kroeberd/mediastarr/refs/heads/main/logos/icon_new.png</Icon>
   <Overview>
 [b]Mediastarr v6.4.0[/b] — Automated missing-content and quality-upgrade search for Sonarr and Radarr.
 
