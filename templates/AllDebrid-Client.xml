@@ -1,0 +1,60 @@
+<?xml version="1.0"?>
+<Container>
+  <n>AllDebrid-Client</n>
+  <Repository>kroeberd/alldebrid-client</Repository>
+  <Registry>https://hub.docker.com/r/kroeberd/alldebrid-client</Registry>
+  <Network>bridge</Network>
+  <Shell>bash</Shell>
+  <Privileged>false</Privileged>
+  <Support>https://github.com/kroeberd/alldebrid-client/issues</Support>
+  <Project>https://github.com/kroeberd/alldebrid-client</Project>
+  <Icon>https://raw.githubusercontent.com/kroeberd/alldebrid-client/main/docs/logo.svg</Icon>
+  <Overview>
+    AllDebrid-Client automates the full torrent lifecycle via your AllDebrid account. Add magnet links
+    through the Web UI, a watch folder, Sonarr/Radarr, or the REST API. Torrents are uploaded to
+    AllDebrid, polled until ready, unlocked, and submitted to aria2 for downloading. Supports Discord
+    notifications, SQLite (default) or PostgreSQL, FlexGet integration, and configurable file filters.
+  </Overview>
+  <Description>
+    Self-hosted torrent automation via AllDebrid. Web UI, aria2 delivery, Discord notifications,
+    SQLite/PostgreSQL, Sonarr/Radarr integration, and FlexGet support.
+  </Description>
+  <Category>Downloaders:</Category>
+  <WebUI>http://[IP]:[PORT:8080]/</WebUI>
+  <TemplateURL>https://raw.githubusercontent.com/kroeberd/unraid-templates/main/templates/alldebrid-client.xml</TemplateURL>
+
+  <!-- Ports -->
+  <Config Name="Web UI Port" Target="8080" Default="8080" Mode="tcp"
+          Description="Port for the AllDebrid-Client web interface."
+          Type="Port" Display="always" Required="true" Mask="false"/>
+
+  <!-- Volumes -->
+  <Config Name="Config Path" Target="/app/config" Default="/mnt/user/appdata/alldebrid-client/config" Mode="rw"
+          Description="Persistent path for the config.json settings file."
+          Type="Path" Display="always" Required="true" Mask="false"/>
+
+  <Config Name="Data Path" Target="/app/data" Default="/mnt/user/appdata/alldebrid-client/data" Mode="rw"
+          Description="Persistent path for the SQLite database and automatic backups."
+          Type="Path" Display="always" Required="true" Mask="false"/>
+
+  <Config Name="Download Path" Target="/download" Default="/mnt/user/downloads/alldebrid" Mode="rw"
+          Description="Directory where aria2 saves completed downloads."
+          Type="Path" Display="always" Required="true" Mask="false"/>
+
+  <Config Name="Watch Folder" Target="/watch" Default="/mnt/user/downloads/alldebrid-watch" Mode="rw"
+          Description="Drop .torrent or .magnet files here to trigger automatic processing."
+          Type="Path" Display="always" Required="false" Mask="false"/>
+
+  <!-- Core environment variables -->
+  <Config Name="Timezone" Target="TZ" Default="Europe/Berlin" Mode="rw"
+          Description="Container timezone (e.g. Europe/Berlin, America/New_York)."
+          Type="Variable" Display="always" Required="false" Mask="false"/>
+
+  <Config Name="Log Level" Target="LOG_LEVEL" Default="INFO" Mode="rw"
+          Description="Logging verbosity. Use DEBUG for troubleshooting, INFO for normal operation."
+          Type="Variable" Display="advanced" Required="false" Mask="false"/>
+
+  <Config Name="Database Type" Target="DB_TYPE" Default="" Mode="rw"
+          Description="Leave empty to use SQLite (default). Set to 'postgres' to use an external PostgreSQL database."
+          Type="Variable" Display="advanced" Required="false" Mask="false"/>
+</Container>
