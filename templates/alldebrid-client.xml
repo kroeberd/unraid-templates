@@ -6,7 +6,7 @@
   <Network>bridge</Network>
   <Shell>bash</Shell>
   <Privileged>false</Privileged>
-  <Support>https://github.com/kroeberd/alldebrid-client/issues</Support>
+  <Support>https://discord.gg/8Vb9cj4ksv</Support>
   <Project>https://github.com/kroeberd/alldebrid-client</Project>
   <Icon>https://raw.githubusercontent.com/kroeberd/alldebrid-client/main/docs/logo.svg</Icon>
   <Overview>
