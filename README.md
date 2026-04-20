@@ -8,6 +8,7 @@ This repository contains **Unraid Community Applications (CA)** templates mainta
 
 | Name | Description | Repository |
 |------|-------------|------------|
+| **AllDebrid-Client** | Self-hosted torrent automation via AllDebrid. Add magnets via Web UI, watch folder, Sonarr/Radarr, or REST API. Includes aria2 delivery, Discord notifications, SQLite/PostgreSQL, and FlexGet support. | [kroeberd/alldebrid-client](https://github.com/kroeberd/alldebrid-client) |
 | **Mediastarr** | Automated missing-content and quality-upgrade search for Sonarr & Radarr. Multi-instance, Discord notifications, SQLite history, Dark/Light/OLED themes, German & English. | [kroeberd/mediastarr](https://github.com/kroeberd/mediastarr) |
 | **JDownloader Discord Monitor** | Monitors one or more JDownloader instances via MyJDownloader and sends periodic Discord embeds with download status, progress, and speed. | [kroeberd/jdownloader-discord-monitor](https://github.com/kroeberd/JDownloader-Discord-Monitor) |
 
