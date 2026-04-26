@@ -10,9 +10,9 @@
   <Project>https://github.com/kroeberd/alldebrid-client</Project>
   <Icon>https://raw.githubusercontent.com/kroeberd/alldebrid-client/main/docs/logo.png</Icon>
   <Overview>
-[b]AllDebrid-Client[/b] — Self-hosted torrent automation via AllDebrid.
+[b]AllDebrid-Client v1.3.7[/b] — Self-hosted torrent automation via AllDebrid.
 
-Add magnet links through the Web UI, a watch folder, Sonarr/Radarr, or the REST API. Torrents are uploaded to AllDebrid, polled until ready, unlocked, and downloaded via aria2.
+Add magnet links or `.torrent` files through the Web UI, Jackett search, a watch folder, Sonarr/Radarr, or the REST API. Torrents are uploaded to AllDebrid, polled until ready, unlocked, and downloaded via aria2.
 
 [b]Features:[/b]
 • Full torrent lifecycle: upload → poll → unlock → aria2 → done → Discord
@@ -20,9 +20,12 @@ Add magnet links through the Web UI, a watch folder, Sonarr/Radarr, or the REST 
 • Slot-based aria2 queue with configurable concurrent download limit
 • Discord rich embeds for add / complete / error events
 • FlexGet v3 integration (schedule + manual trigger)
+• Jackett search with direct add from the UI
 • SQLite (default) or PostgreSQL (external)
 • Sonarr / Radarr import trigger
 • File filters — block by extension, keyword, minimum size
+• Reporting webhooks, stats snapshots, and JSON export
+• Database backup and guarded wipe tools
 • Automatic no-peer cleanup and stuck-download detection
 
 [b]Quick Setup:[/b]
@@ -34,7 +37,7 @@ Add magnet links through the Web UI, a watch folder, Sonarr/Radarr, or the REST 
 [b]Network:[/b] Uses host network mode to avoid conflicts with Unraid shares (shfs).
   </Overview>
   <Description>
-    Self-hosted torrent automation via AllDebrid. Upload magnets via Web UI, watch folder, Sonarr/Radarr or API. aria2 downloads, Discord webhooks, FlexGet integration, file filters.
+    Self-hosted torrent automation via AllDebrid. Upload magnets or torrent files via Web UI, Jackett, watch folder, Sonarr/Radarr, or API. aria2 downloads, Discord and reporting webhooks, FlexGet integration, file filters, and database maintenance.
   </Description>
   <Beta>False</Beta>
   <Category>Downloaders:</Category>
