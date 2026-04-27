@@ -123,12 +123,12 @@ Add magnet links or `.torrent` files through the Web UI, Jackett search, a watch
     Type="Variable"
     Display="always"
     Required="false"
-    Mask="false">1000</Config>
+    Mask="false">99</Config>
 
   <Config
     Name="PGID"
     Target="PGID"
-    Default="1000"
+    Default="100"
     Mode=""
     Description="Group ID for downloaded files. Must match the GID of the group used by your other media containers. Run 'id' in a terminal on the host to find the right value."
     Type="Variable"
