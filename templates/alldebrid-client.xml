@@ -10,7 +10,7 @@
   <Project>https://github.com/kroeberd/alldebrid-client</Project>
   <Icon>https://raw.githubusercontent.com/kroeberd/alldebrid-client/main/docs/logo.png</Icon>
   <Overview>
-[b]AllDebrid-Client v1.4.0[/b] — Self-hosted torrent automation via AllDebrid.
+[b]AllDebrid-Client v1.4.2[/b] — Self-hosted torrent automation via AllDebrid.
 
 Add magnet links or `.torrent` files through the Web UI, Jackett search, a watch folder, Sonarr/Radarr, or the REST API. AllDebrid-Client handles the full lifecycle: upload → poll → parallel unlock → aria2 download → notify.
 
@@ -110,6 +110,28 @@ Add magnet links or `.torrent` files through the Web UI, Jackett search, a watch
     Mask="false">/mnt/user/downloads/alldebrid</Config>
 
   <!-- ── Environment Variables ───────────────────────────────────────── -->
+
+  <Config
+    Name="PUID"
+    Target="PUID"
+    Default="1000"
+    Mode=""
+    Description="User ID for downloaded files. Must match the UID of the user running your other media containers (Sonarr, Radarr, Plex). Run 'id' in a terminal on the host to find the right value. Files will be owned by this UID so other containers can read and write them."
+    Type="Variable"
+    Display="always"
+    Required="false"
+    Mask="false">1000</Config>
+
+  <Config
+    Name="PGID"
+    Target="PGID"
+    Default="1000"
+    Mode=""
+    Description="Group ID for downloaded files. Must match the GID of the group used by your other media containers. Run 'id' in a terminal on the host to find the right value."
+    Type="Variable"
+    Display="always"
+    Required="false"
+    Mask="false">1000</Config>
 
   <Config
     Name="Timezone"
