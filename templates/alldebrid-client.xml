@@ -29,6 +29,9 @@ Add magnet links or `.torrent` files through the Web UI, Jackett search, a watch
 • Reporting webhooks, stats snapshots with retention, and JSON export
 • Database backups on a configurable schedule
 
+[b]New in v1.4.2:[/b]
+• PUID / PGID support — set the UID/GID so downloaded files are owned by your media user (Sonarr, Radarr, Plex)
+
 [b]New in v1.4.0:[/b]
 • unlock_link calls are now parallel → 10-file torrent unlocked in ~0.6s instead of ~4s
 • aria2 dispatch poll: 5s → 1s (downloads start within ~1s of being queued)
@@ -132,6 +135,17 @@ Add magnet links or `.torrent` files through the Web UI, Jackett search, a watch
     Display="always"
     Required="false"
     Mask="false">1000</Config>
+
+  <Config
+    Name="UMASK"
+    Target="UMASK"
+    Default="002"
+    Mode=""
+    Description="File permission mask for created files. 002 = group-writable (recommended when sharing files with other containers). 022 = group-readable only."
+    Type="Variable"
+    Display="advanced"
+    Required="false"
+    Mask="false">002</Config>
 
   <Config
     Name="Timezone"
