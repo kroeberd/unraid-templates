@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Container version="2">
-  <Name>AllDebrid-Client</Name>
+  <n>AllDebrid-Client</n>
   <Repository>kroeberd/alldebrid-client:latest</Repository>
   <Registry>https://hub.docker.com/r/kroeberd/alldebrid-client</Registry>
   <Network>host</Network>
@@ -10,41 +10,47 @@
   <Project>https://github.com/kroeberd/alldebrid-client</Project>
   <Icon>https://raw.githubusercontent.com/kroeberd/alldebrid-client/main/docs/logo.png</Icon>
   <Overview>
-[b]AllDebrid-Client v1.3.7[/b] — Self-hosted torrent automation via AllDebrid.
+[b]AllDebrid-Client v1.4.0[/b] — Self-hosted torrent automation via AllDebrid.
 
-Add magnet links or `.torrent` files through the Web UI, Jackett search, a watch folder, Sonarr/Radarr, or the REST API. Torrents are uploaded to AllDebrid, polled until ready, unlocked, and downloaded via aria2.
+Add magnet links or `.torrent` files through the Web UI, Jackett search, a watch folder, Sonarr/Radarr, or the REST API. AllDebrid-Client handles the full lifecycle: upload → poll → parallel unlock → aria2 download → notify.
 
 [b]Features:[/b]
-• Full torrent lifecycle: upload → poll → unlock → aria2 → done → Discord
+• Full lifecycle: upload → poll → unlock (parallel) → aria2 → done → Discord
+• Built-in aria2 daemon — no separate container required (or use your own external aria2)
+• Live Downloads view in the sidebar — 1-second auto-refresh, progress bars, Pause/Resume/Remove
+• Quick speed-limit preset (Unlimited / 1 / 2 / 5 / 10 / 20 / 50 MB/s + Custom)
+• Jackett search with category + indexer filters and direct Add from results
 • Watch folder — drop .torrent or .magnet files for auto-import
-• Slot-based aria2 queue with configurable concurrent download limit
-• Discord rich embeds for add / complete / error events
-• FlexGet v3 integration (schedule + manual trigger)
-• Jackett search with direct add from the UI
-• SQLite (default) or PostgreSQL (external)
-• Sonarr / Radarr import trigger
-• File filters — block by extension, keyword, minimum size
-• Reporting webhooks, stats snapshots, and JSON export
-• Database backup and guarded wipe tools
-• Automatic no-peer cleanup and stuck-download detection
+• Discord rich embeds for add / complete / error / partial / FlexGet / stats events
+• FlexGet v3 integration (schedule + manual trigger from the UI)
+• Sonarr / Radarr download-client integration with post-download import trigger
+• File filters — block by extension, keyword, or minimum size
+• SQLite (default, zero-config) or external PostgreSQL
+• Reporting webhooks, stats snapshots with retention, and JSON export
+• Database backups on a configurable schedule
+
+[b]New in v1.4.0:[/b]
+• unlock_link calls are now parallel → 10-file torrent unlocked in ~0.6s instead of ~4s
+• aria2 dispatch poll: 5s → 1s (downloads start within ~1s of being queued)
+• Downloads sidebar view with real-time queue and speed-limit control
 
 [b]Quick Setup:[/b]
 1. Set paths for Config, Data, Watch, Processed, and Downloads
 2. Open http://[IP]:8080 → Settings → enter AllDebrid API key → Save
-3. Configure aria2 RPC URL in Settings → Download
-4. Add magnets via UI or drop files in the Watch folder
+3. Set Download client to aria2-builtin (built-in) or configure external aria2 RPC URL
+4. Add magnets via UI, Jackett Search, or drop files in the Watch folder
 
 [b]Network:[/b] Uses host network mode to avoid conflicts with Unraid shares (shfs).
   </Overview>
   <Description>
-    Self-hosted torrent automation via AllDebrid. Upload magnets or torrent files via Web UI, Jackett, watch folder, Sonarr/Radarr, or API. aria2 downloads, Discord and reporting webhooks, FlexGet integration, file filters, and database maintenance.
+    Self-hosted torrent automation via AllDebrid. Parallel link unlocking, built-in or external aria2, live Downloads view with speed-limit control, Jackett search, Discord webhooks, FlexGet, Sonarr/Radarr, file filters, SQLite/PostgreSQL.
   </Description>
   <Beta>False</Beta>
   <Category>Downloaders:</Category>
   <WebUI>http://[IP]:8080/</WebUI>
   <TemplateURL>https://raw.githubusercontent.com/kroeberd/unraid-templates/main/templates/alldebrid-client.xml</TemplateURL>
   <ExtraParams>--restart=unless-stopped</ExtraParams>
-  <Date>2026-04-21</Date>
+  <Date>2026-04-27</Date>
 
   <!-- ── Volumes ─────────────────────────────────────────────────────── -->
 
@@ -75,7 +81,7 @@ Add magnet links or `.torrent` files through the Web UI, Jackett search, a watch
     Target="/app/data/watch"
     Default="/mnt/user/data/torrents/watch"
     Mode="rw"
-    Description="Drop .torrent or .magnet files here for automatic import."
+    Description="Drop .torrent or .magnet files here for automatic import. Leave empty if unused."
     Type="Path"
     Display="always"
     Required="false"
@@ -86,7 +92,7 @@ Add magnet links or `.torrent` files through the Web UI, Jackett search, a watch
     Target="/app/data/processed"
     Default="/mnt/user/data/torrents/processed"
     Mode="rw"
-    Description="Torrent/magnet files are moved here after processing."
+    Description="Torrent/magnet files are moved here after processing. Leave empty if unused."
     Type="Path"
     Display="always"
     Required="false"
@@ -97,7 +103,7 @@ Add magnet links or `.torrent` files through the Web UI, Jackett search, a watch
     Target="/download"
     Default="/mnt/user/downloads/alldebrid"
     Mode="rw"
-    Description="[REQUIRED] Downloaded files land here (must match aria2 download path)."
+    Description="[REQUIRED] Downloaded files land here. If using external aria2, this path must match aria2's download directory."
     Type="Path"
     Display="always"
     Required="true"
@@ -110,7 +116,7 @@ Add magnet links or `.torrent` files through the Web UI, Jackett search, a watch
     Target="TZ"
     Default="Europe/Berlin"
     Mode=""
-    Description="Container timezone — used for all timestamps in logs and Discord messages. Examples: Europe/Berlin, UTC, America/New_York. Full list: https://en.wikipedia.org/wiki/List_of_tz_database_time_zones"
+    Description="Container timezone — used for all timestamps in logs and Discord messages. Examples: Europe/Berlin, UTC, America/New_York."
     Type="Variable"
     Display="always"
     Required="false"
@@ -121,7 +127,7 @@ Add magnet links or `.torrent` files through the Web UI, Jackett search, a watch
     Target="LOG_LEVEL"
     Default="INFO"
     Mode=""
-    Description="Logging verbosity. Use DEBUG for troubleshooting, INFO for normal operation."
+    Description="Logging verbosity: INFO for normal operation, DEBUG for troubleshooting."
     Type="Variable"
     Display="advanced"
     Required="false"
@@ -132,7 +138,7 @@ Add magnet links or `.torrent` files through the Web UI, Jackett search, a watch
     Target="DB_TYPE"
     Default=""
     Mode=""
-    Description="Leave empty to use SQLite (default). Set to 'postgres' to use an external PostgreSQL database (configure connection in the web UI Settings)."
+    Description="Leave empty for SQLite (default, no setup required). Set to 'postgres' to use an external PostgreSQL database — configure the connection in Settings → Database."
     Type="Variable"
     Display="advanced"
     Required="false"
@@ -143,7 +149,7 @@ Add magnet links or `.torrent` files through the Web UI, Jackett search, a watch
     Target="CONFIG_PATH"
     Default="/app/config/config.json"
     Mode=""
-    Description="Internal config file path — do not change unless you know what you are doing."
+    Description="Internal config file path. Do not change unless you have a specific reason."
     Type="Variable"
     Display="advanced"
     Required="false"
@@ -154,7 +160,7 @@ Add magnet links or `.torrent` files through the Web UI, Jackett search, a watch
     Target="DB_PATH"
     Default="/app/data/alldebrid.db"
     Mode=""
-    Description="Internal SQLite database path — do not change unless you know what you are doing."
+    Description="Internal SQLite database path. Do not change unless you have a specific reason."
     Type="Variable"
     Display="advanced"
     Required="false"
