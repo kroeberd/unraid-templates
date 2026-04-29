@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Container version="2">
-  <n>AllDebrid-Client</n>
+  <Name>AllDebrid-Client</Name>
   <Repository>kroeberd/alldebrid-client:latest</Repository>
   <Registry>https://hub.docker.com/r/kroeberd/alldebrid-client</Registry>
   <Network>host</Network>
