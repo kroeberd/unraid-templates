@@ -10,55 +10,56 @@
   <Project>https://github.com/kroeberd/alldebrid-client</Project>
   <Icon>https://raw.githubusercontent.com/kroeberd/alldebrid-client/main/docs/logo.png</Icon>
   <Overview>
-[b]AllDebrid-Client v1.5.2[/b] — Self-hosted torrent automation via AllDebrid.
+[b]AllDebrid-Client v1.6.4[/b] — Self-hosted torrent automation via AllDebrid.
 
-Add magnet links or .torrent files through the Web UI, Jackett search, a watch folder, Sonarr/Radarr, or the REST API. AllDebrid-Client handles the full lifecycle: upload → poll → parallel unlock → aria2 download → notify.
+Add magnet links or .torrent files through the Web UI, Jackett/Prowlarr search, a watch folder, Sonarr/Radarr (native qBittorrent API), or the REST API. AllDebrid-Client handles the full lifecycle: upload → poll → parallel unlock → aria2 download → notify.
 
 [b]Features:[/b]
 • Full lifecycle: upload → poll → unlock (parallel) → aria2 → done → Discord
-• Built-in aria2 daemon — default, no extra setup required (or use your own external aria2)
-• Live download speed shown in the header (built-in mode only)
-• Torrent list with pagination (25/page default), status filter, and full-text search
-• Live Downloads view — 1-second auto-refresh, progress bars, Pause/Resume/Remove
-• Jackett multi-indexer search with chip picker — select one, several, or all indexers
+• Built-in aria2 — default, no extra setup required (or use your own external aria2)
+• Sonarr / Radarr native integration via qBittorrent v4.3.2 API emulation at /api/v2/
+• Prowlarr support — modern Jackett alternative with native *arr integration
+• Jackett multi-indexer search with chip picker and bulk Add / Add Selected / Add All
+• Server-Sent Events (SSE) — instant live updates, no 15-second polling
+• HTTP Basic Auth — optional access control (Settings → Access Control)
+• Disk space guard — abort download before start if free space below threshold
+• Post-processing script — shell command after each completed download
+• Symlink / .url downloader — for rclone AllDebrid mount setups
+• File selection — preview and block individual files before download
 • Watch folder — drop .torrent or .magnet files for auto-import
-• Discord rich embeds for add / complete / error / partial / FlexGet / stats events
-• Statistics with period selector: 1h / 24h / 7d / 30d / 1y / all-time
+• Auto-extraction — zip, rar, 7z, tar.* after download
+• Discord rich embeds per event type (add / complete / error / no-peers / stats)
+• Statistics: period selector 1h / 24h / 7d / 30d / 1y / all-time
 • FlexGet v3 integration (schedule + manual trigger from the UI)
-• Sonarr / Radarr download-client integration with post-download import trigger
-• File filters — block by extension, keyword, or minimum size
+• Prometheus metrics at /api/metrics (Grafana-ready)
 • SQLite (default, zero-config) or external PostgreSQL
-• Reporting webhooks, stats snapshots with retention, and JSON export
-• Database backups on a configurable schedule
-• Built-in Help sidebar — Quick Start, How It Works, aria2, RAM, Integrations, Troubleshooting
-
-[b]New in v1.5.x:[/b]
-• Settings restructured: 11 tabs → 5 tabs (General / Download / Notifications / Services / Advanced)
-• Built-in aria2 is now the default — no manual setup needed on first install
-• Live download speed badge in the header (built-in mode only)
-• Statistics period filter: 1h / 24h / 7d / 30d / 1y / all-time
-• Torrent list pagination: 15 / 25 / 50 / 100 per page
-• Jackett indexer picker with chip UI (mobile-friendly, no Ctrl+click required)
-• Built-in Help documentation sidebar
-• Hamburger menu contrast fixed in dark mode
+• Automatic event log TTL, database backups, JSON export
+• Token-bucket rate limiter for AllDebrid API
+• Interactive API docs at /docs (Swagger UI)
+• Built-in Help — Quick Start, Sonarr/Radarr setup, Troubleshooting
 
 [b]Quick Setup:[/b]
 1. Set paths for Config, Data, Watch, Processed, and Downloads
-2. Open http://[IP]:8080 → Settings → ⚡ General → enter AllDebrid API key → Save
+2. Open http://[IP]:8080 → Settings → General → enter AllDebrid API key → Save
 3. Built-in aria2 starts automatically — no further setup required
-4. Add magnets via UI, Jackett Search, or drop files in the Watch folder
+4. (Optional) Add as qBittorrent download client in Sonarr/Radarr: Host=[IP], Port=8080
+5. Add magnets via UI, search, or drop files in the Watch folder
+
+[b]Sonarr / Radarr:[/b]
+Settings → Download Clients → + → qBittorrent → Host: [IP], Port: 8080
+No username/password needed unless you enable HTTP Basic Auth.
 
 [b]Network:[/b] Uses host network mode to avoid conflicts with Unraid shares (shfs).
   </Overview>
   <Description>
-    Self-hosted torrent automation via AllDebrid. Built-in aria2 (default, no setup), live speed badge, Jackett multi-indexer search, torrent pagination, period statistics, Help sidebar, Discord webhooks, FlexGet, Sonarr/Radarr, SQLite/PostgreSQL.
+    Self-hosted torrent automation via AllDebrid. Built-in aria2, qBittorrent API emulation for Sonarr/Radarr, Prowlarr/Jackett search, SSE live updates, HTTP Basic Auth, Prometheus metrics, Symlink downloader, file selection, Discord webhooks, FlexGet, SQLite/PostgreSQL.
   </Description>
   <Beta>False</Beta>
   <Category>Downloaders:</Category>
   <WebUI>http://[IP]:8080/</WebUI>
   <TemplateURL>https://raw.githubusercontent.com/kroeberd/unraid-templates/main/templates/alldebrid-client.xml</TemplateURL>
   <ExtraParams>--restart=unless-stopped</ExtraParams>
-  <Date>2026-04-29</Date>
+  <Date>2026-05-11</Date>
 
   <!-- ── Volumes ─────────────────────────────────────────────────────── -->
 
@@ -124,7 +125,7 @@ Add magnet links or .torrent files through the Web UI, Jackett search, a watch f
     Target="PUID"
     Default="1000"
     Mode=""
-    Description="User ID for downloaded files. Must match the UID of the user running your other media containers (Sonarr, Radarr, Plex). Run 'id' in a terminal on the host to find the right value. Files will be owned by this UID so other containers can read and write them."
+    Description="User ID for downloaded files. Must match the UID of the user running Sonarr, Radarr, Plex, etc. Run 'id' in a terminal on the host to find the right value."
     Type="Variable"
     Display="always"
     Required="false"
@@ -135,7 +136,7 @@ Add magnet links or .torrent files through the Web UI, Jackett search, a watch f
     Target="PGID"
     Default="100"
     Mode=""
-    Description="Group ID for downloaded files. Must match the GID of the group used by your other media containers. Run 'id' in a terminal on the host to find the right value."
+    Description="Group ID for downloaded files. Must match the GID used by your other media containers. Run 'id' in a terminal on the host."
     Type="Variable"
     Display="always"
     Required="false"
@@ -146,7 +147,7 @@ Add magnet links or .torrent files through the Web UI, Jackett search, a watch f
     Target="UMASK"
     Default="002"
     Mode=""
-    Description="File permission mask for created files. 002 = group-writable (recommended when sharing files with other containers). 022 = group-readable only."
+    Description="File permission mask. 002 = group-writable (recommended when sharing files with other containers). 022 = group-readable only."
     Type="Variable"
     Display="advanced"
     Required="false"
@@ -157,7 +158,7 @@ Add magnet links or .torrent files through the Web UI, Jackett search, a watch f
     Target="TZ"
     Default="Europe/Berlin"
     Mode=""
-    Description="Container timezone — used for all timestamps in logs and Discord messages. Examples: Europe/Berlin, UTC, America/New_York."
+    Description="Container timezone for logs and Discord timestamps. Examples: Europe/Berlin, UTC, America/New_York."
     Type="Variable"
     Display="always"
     Required="false"
@@ -179,7 +180,7 @@ Add magnet links or .torrent files through the Web UI, Jackett search, a watch f
     Target="DB_TYPE"
     Default=""
     Mode=""
-    Description="Leave empty for SQLite (default, no setup required). Set to 'postgres' to use an external PostgreSQL database — configure the connection in Settings → Database."
+    Description="Leave empty for SQLite (default, no setup required). Set to 'postgres' for an external PostgreSQL database — configure the connection in Settings → Database."
     Type="Variable"
     Display="advanced"
     Required="false"
