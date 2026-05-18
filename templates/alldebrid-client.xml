@@ -10,7 +10,7 @@
   <Project>https://github.com/kroeberd/alldebrid-client</Project>
   <Icon>https://raw.githubusercontent.com/kroeberd/alldebrid-client/main/docs/logo.png</Icon>
   <Overview>
-[b]AllDebrid-Client v1.9.1[/b] — Self-hosted torrent automation via AllDebrid.
+[b]AllDebrid-Client v1.9.2[/b] — Self-hosted torrent automation via AllDebrid.
 
 Add magnet links or .torrent files through the Web UI, Jackett/Prowlarr search, a watch folder, Sonarr/Radarr (native qBittorrent API), or the REST API. AllDebrid-Client handles the full lifecycle: upload → poll → parallel unlock → aria2 download → notify.
 
@@ -59,7 +59,7 @@ No username/password needed unless you enable HTTP Basic Auth.
   <WebUI>http://[IP]:8080/</WebUI>
   <TemplateURL>https://raw.githubusercontent.com/kroeberd/unraid-templates/main/templates/alldebrid-client.xml</TemplateURL>
   <ExtraParams>--restart=unless-stopped</ExtraParams>
-  <Date>2026-05-16</Date>
+  <Date>2026-05-18</Date>
 
   <!-- ── Volumes ─────────────────────────────────────────────────────── -->
 
